@@ -1,13 +1,15 @@
-FROM debian:buster
-LABEL maintainer="minun (minun@mewmew.cn)"
+FROM ubuntu:20.04
 
 ENV LANG=C.UTF-8
 
 # update repo sources
 RUN set -ex; \
     cp /etc/apt/sources.list /etc/apt/sources.list.bak; \
-    echo "deb http://mirrors.aliyun.com/debian buster main" > /etc/apt/sources.list; \
-    echo "deb http://mirrors.aliyun.com/debian buster-updates main" >> /etc/apt/sources.list; \
+    echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse" > /etc/apt/sources.list; \
+    echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-security main restricted universe multiverse" >> /etc/apt/sources.list; \
+    echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse" >> /etc/apt/sources.list; \
+    echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse" >> /etc/apt/sources.list; \
+    echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse" >> /etc/apt/sources.list; \
     apt-get clean; \
     dpkg --add-architecture i386; \
     apt-get update;
@@ -37,7 +39,7 @@ RUN set -ex; \
         wine-binfmt \
         xserver-xorg-video-all;
 
-ADD wechat-devtools-compact-1.03.2008270.tar.gz /opt/wechat/devtools
+ADD wechat-devtools-1.03.2009140-compact.tar.gz /opt/wechat/devtools
 
 COPY docker-entrypoint /opt/wechat/devtools/bin/docker-entrypoint
 
